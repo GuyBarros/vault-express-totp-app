@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate TOTP</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Validate TOTP</h1>
+        <form action="/user/validate" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="code">TOTP Code:</label>
+            <input type="text" id="code" name="code" required>
+            <button type="submit" class="button">Validate</button>
+        </form>
+        <div id="validation-result"></div>
+        <a href="/" class="button">Back</a>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('result')) {
+                const result = urlParams.get('result');
+                const validationResult = document.getElementById('validation-result');
+                validationResult.innerText = result;
+                if (result === 'Code is valid') {
+                    validationResult.style.color = '#28a745'; // Green color for valid
+                } else {
+                    validationResult.style.color = '#ffbf00'; // Amber color for invalid
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
