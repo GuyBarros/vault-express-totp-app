@@ -53,11 +53,9 @@ router.post('/register', async (req, res) => {
             generate: true,
             issuer: 'MyApp',
             account_name: email
-        }, {
-            headers: {
-                'X-Vault-Token': VAULT_TOKEN
-            }
-        });
+        }, 
+            headers
+        );
 
         const key = response.data.data;
         const otpauth = key.url;
@@ -85,11 +83,9 @@ router.post('/validate', async (req, res) => {
     try {
         const response = await axios.post(`${VAULT_ADDR}/v1/totp/code/${email}`, {
             code
-        }, {
-            headers: {
-                'X-Vault-Token': VAULT_TOKEN
-            }
-        });
+        }, 
+            headers
+        );
 
         const result = response.data.data.valid ? 'Code is valid' : 'Code is invalid';
         res.redirect(`/validate?result=${encodeURIComponent(result)}`);
